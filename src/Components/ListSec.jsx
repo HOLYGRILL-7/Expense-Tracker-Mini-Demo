@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const ListSec = () => {
+const ListSec = ({ visible }) => {
   const [categories, setCategories] = useState([
     { name: "Bills", amount: 1200, details: "Monthly recurring bills" },
     { name: "Needs", amount: 800, details: "Essential expenses" },
@@ -69,7 +69,15 @@ const ListSec = () => {
   };
 
   return (
-    <div className="bg-gray-100 p-4 rounded shadow-md w-full max-w-4xl h-[35rem] flex flex-col">
+    <div
+      className={`bg-gray-100 p-4 rounded shadow-md w-full max-w-4xl h-[35rem] flex flex-col transition-all duration-700 ease-out transform
+        ${
+          visible
+            ? "opacity-100 translate-y-0"
+            : "opacity-0 -translate-y-6 pointer-events-none"
+        }
+      `}
+    >
       <div className="flex justify-between items-start mb-4">
         <div className="flex items-center gap-3">
           <div className="w-1 h-8 bg-blue-400 rounded-full"></div>
@@ -81,12 +89,14 @@ const ListSec = () => {
         </p>
       </div>
 
-      {/* Scrollable categories list */}
       <div className="flex-1 overflow-y-auto pr-2">
         <ul className="space-y-3">
           {categories.map((category, index) => (
             <li key={index}>
-              <div className="bg-white text-black font-semibold px-6 py-3 w-full rounded-xl border border-gray-200 shadow-md hover:shadow-lg hover:bg-gray-50 cursor-pointer flex items-center justify-between gap-2 transition-all duration-200">
+              <div
+                className="bg-white text-black font-semibold px-6 py-3 w-full rounded-xl border border-gray-200 shadow-md hover:shadow-lg hover:bg-gray-50 cursor-pointer flex items-center justify-between gap-2 transition-all duration-200"
+                onClick={() => handleEdit(index)}
+              >
                 <div className="flex-1">
                   <div className="flex items-center justify-between mb-1">
                     <span className="text-lg font-semibold">
@@ -104,7 +114,10 @@ const ListSec = () => {
                 </div>
                 <button
                   className="text-sm text-blue-600 hover:text-blue-800 cursor-pointer px-2 py-1 rounded transition-colors ml-4"
-                  onClick={() => handleEdit(index)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleEdit(index);
+                  }}
                 >
                   Edit
                 </button>
@@ -114,7 +127,6 @@ const ListSec = () => {
         </ul>
       </div>
 
-      {/* Fixed form/button at bottom */}
       <div className="mt-4 flex-shrink-0">
         {showForm ? (
           <div className="bg-white p-4 rounded-xl border border-gray-200 shadow-md">
@@ -175,8 +187,7 @@ const ListSec = () => {
             onClick={handleAddClick}
             className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors flex items-center gap-2"
           >
-            <span>+</span>
-            Add Category
+            <span>+</span> Add Category
           </button>
         )}
       </div>
