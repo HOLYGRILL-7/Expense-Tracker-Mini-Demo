@@ -37,7 +37,7 @@ function AppLayout({ children }) {
           <div className="logo-section relative mx-10">
             <HandCoins size={40} className="inline-block" />
             <h1 className="inline-block mx-5 absolute bottom-0 font-bold text-3xl">
-              ALL-MITE{" "}
+              ALL-MITE{" "} kkk
             </h1>
           </div>
           <p className="mx-12">"Track every single mite.."</p>
